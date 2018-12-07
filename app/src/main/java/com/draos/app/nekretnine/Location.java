@@ -5,14 +5,20 @@ import com.google.gson.annotations.SerializedName;
 public class Location {
 
     @SerializedName("id")
-    int id;
+    long id;
 
     @SerializedName("address")
     String address;
+    @SerializedName("settlement")
+    String settlement;
 
-    public Location(int id, String address) {
+    @SerializedName("city_id")
+    int city;
+
+    public Location(int id, String address, String settlement, int city) {
         this.id = id;
         this.address = address;
+        this.city=city;
     }
 
     public Location(String address) {
