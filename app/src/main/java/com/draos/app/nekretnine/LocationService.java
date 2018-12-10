@@ -2,6 +2,8 @@ package com.draos.app.nekretnine;
 
 
 import java.util.List;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -16,9 +18,13 @@ public interface LocationService {
     Call<List<com.draos.app.nekretnine.Location>> all();
 
     @GET("locations/{locationId}")
-    Call<Location> getLocation(@Query("id") int id);
+    Call<Location> getLocation(@Path("locationId") long id);
+
+    @POST("locations/new")
+    Call<ResponseBody> postUser(@Body Location location);
+
     public static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.112:8080/")
+            .baseUrl("http://10.0.2.2:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 }
