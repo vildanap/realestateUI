@@ -1,6 +1,7 @@
 package com.draos.app.nekretnine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
         final EditText etAddress= (EditText) findViewById(R.id.etAddress);
         final EditText etSettlment= (EditText) findViewById(R.id.etSettlment);
         final Button createBtn = (Button) findViewById(R.id.button3);
+        //upload
+        final Button btnUpload = (Button) findViewById(R.id.button4);
+
+
+
+
 
         //TODO popuniti listu iz baze
         List<City> cities = new ArrayList<City>();
@@ -68,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         textView.setText(t.getMessage());
                     }
                 });*/
+
                LocationService service = LocationService.retrofit.create(LocationService.class);
                final Call<Location> call = service.getLocation(1);
                 call.enqueue(new Callback<Location>() {
@@ -76,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("r", "onResponse: "+ response.body().toString());
                         if(response.isSuccessful()) {
                             textView.setText("Location by id:\n");
+                            textView.append(response.body().city.name + "\n");
 
-                                textView.append(response.body().city.name + "\n");
 
                         } else {
                             System.out.println(response.errorBody());
@@ -107,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if(response.code()==200) {
+                        if(response.code()==201) {
                             Context context = getApplicationContext();
                             CharSequence text = "Created!";
                             int duration = Toast.LENGTH_SHORT;
@@ -126,6 +134,13 @@ public class MainActivity extends AppCompatActivity {
 
             }});
 
+        //otvara novi activity za upload
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ImageActivity.class);
+                startActivity(intent);
+            }});
 
     }
 
