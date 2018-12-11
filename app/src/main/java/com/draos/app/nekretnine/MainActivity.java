@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });*/
 
-               LocationService service = LocationService.retrofit.create(LocationService.class);
+               LocationService service = RealEstateServiceGenerator.createService(LocationService.class);
                final Call<Location> call = service.getLocation(1);
                 call.enqueue(new Callback<Location>() {
                     @Override
@@ -109,15 +109,36 @@ public class MainActivity extends AppCompatActivity {
                 c = (City) spinner.getSelectedItem();
                 Log.d("spinner", "onClick: "+ c.toString());
                 Location l = new Location (address,settelment,c);
-                LocationService service = LocationService.retrofit.create(LocationService.class);
+                LocationService service = RealEstateServiceGenerator.createService(LocationService.class);
 
-                final Call<ResponseBody> call = service.postUser(l);
+    /*            final Call<ResponseBody> call = service.postUser(l);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if(response.code()==201) {
                             Context context = getApplicationContext();
                             CharSequence text = "Created!";
+                            int duration = Toast.LENGTH_SHORT;
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+
+                        } else {
+                            System.out.println(response.errorBody());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        textView.setText("Something went wrong: " + t.getMessage());
+                    }
+                });*/
+    // edit
+                final Call<ResponseBody> call = service.updateLocation(1, l);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.code()==200) {
+                            Context context = getApplicationContext();
+                            CharSequence text = "Location succesfully updated!";
                             int duration = Toast.LENGTH_SHORT;
                             Toast toast = Toast.makeText(context, text, duration);
                             toast.show();

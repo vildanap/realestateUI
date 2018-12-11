@@ -13,6 +13,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -30,12 +31,16 @@ public interface LocationService {
     @GET("files/{id}")
     Call<ResponseBody> getFile(@Path("id") long id);
 
+    @PUT("locations/{locationId}")
+    Call<ResponseBody> updateLocation(@Path("locationId") long id, @Body Location location);
+
     @Multipart
     @POST("/uploadFile")
     Call<ResponseBody> postImage(@Part MultipartBody.Part image);
 
-    public static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")
+  /*  public static final Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("http://192.168.1.112" +
+                    ":8080/")
             .addConverterFactory(GsonConverterFactory.create())
-            .build();
+            .build();*/
 }

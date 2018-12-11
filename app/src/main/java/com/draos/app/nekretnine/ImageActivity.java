@@ -125,7 +125,7 @@ public class ImageActivity extends AppCompatActivity {
 
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/jpeg"), file);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("files", file.getName(), reqFile);
-                    LocationService service = LocationService.retrofit.create(LocationService.class);
+                    LocationService service = RealEstateServiceGenerator.createService(LocationService.class);
                     final Call<ResponseBody> call = service.postImage(body);
                     call.enqueue(new Callback<ResponseBody>() {
                         @Override
