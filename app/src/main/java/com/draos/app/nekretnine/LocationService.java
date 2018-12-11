@@ -26,7 +26,7 @@ public interface LocationService {
     Call<Location> getLocation(@Path("locationId") long id);
 
     @POST("locations/new")
-    Call<ResponseBody> postUser(@Body Location location);
+    Call<ResponseBody> createLocation(@Body Location location);
 
     @GET("files/{id}")
     Call<ResponseBody> getFile(@Path("id") long id);

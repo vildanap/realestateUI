@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });*/
 
-               LocationService service = RealEstateServiceGenerator.createService(LocationService.class);
+               // GET LOCATION BY ID
+           /*    LocationService service = RealEstateServiceGenerator.createService(LocationService.class);
                final Call<Location> call = service.getLocation(1);
                 call.enqueue(new Callback<Location>() {
                     @Override
@@ -96,6 +97,30 @@ public class MainActivity extends AppCompatActivity {
                         textView.setText("Something went wrong: " + t.getMessage());
                     }
                 });
+                */
+                // GET USER BY ID
+
+                UserService userService = RealEstateServiceGenerator.createService((UserService.class));
+                final Call<User> call = userService.getUser(1);
+                call.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        Log.d("r", "onResponse: "+ response.body().toString());
+                        if(response.isSuccessful()) {
+                            textView.setText("User by id:\n");
+                            textView.append(response.body().firstName + "\n");
+
+
+                        } else {
+                            System.out.println(response.errorBody());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        textView.setText("Something went wrong: " + t.getMessage());
+                    }
+                });
+
             }
         });
 
@@ -111,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 Location l = new Location (address,settelment,c);
                 LocationService service = RealEstateServiceGenerator.createService(LocationService.class);
 
-    /*            final Call<ResponseBody> call = service.postUser(l);
+    /*            final Call<ResponseBody> call = service.createLocation(l);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -131,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                         textView.setText("Something went wrong: " + t.getMessage());
                     }
                 });*/
-    // edit
+    // edit location
                 final Call<ResponseBody> call = service.updateLocation(1, l);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
